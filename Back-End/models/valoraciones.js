@@ -5,8 +5,8 @@ const { Model, DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   class Valoraciones extends Model {
     static associate(models) {
-      this.belongsTo(models.Usuarios, { foreignKey: "usuario_id" });
-      this.belongsTo(models.Cursos, { foreignKey: "curso_id" });
+      this.belongsTo(models.Usuarios, { foreignKey: "usuario_id",  });
+      this.hasMany(models.Cursos, { foreignKey: "valoraciones_id", as: 'valoraciones'});
     }
   }
 
@@ -44,19 +44,11 @@ module.exports = (sequelize) => {
           key: "id",
         },
       },
-      curso_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Cursos", // Nombre de la tabla relacionada
-          key: "id",
-        },
-      },
     },
     {
       sequelize,
       modelName: "Valoraciones",
-      tableName: "valoraciones", // Nombre de la tabla en la base de datos
+      tableName: "Valoraciones", // Nombre de la tabla en la base de datos
       timestamps: true, // Para incluir campos createdAt y updatedAt
     }
   );

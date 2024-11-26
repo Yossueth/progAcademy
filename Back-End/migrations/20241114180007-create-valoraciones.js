@@ -25,12 +25,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Usuarios',
-          key: 'id'
+          model: "Usuarios",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

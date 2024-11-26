@@ -40,7 +40,7 @@ const put_SesionActiva = async (req, res) => {
     const sesion = await SesionActiva.findByPk(id);
     if (!sesion) return res.status(404).json({ error: "sesion no encontrado" });
 
-    await curso.update({
+    await sesion.update({
       fecha_creacion,
       fecha_expiracion,
       usuario_id,

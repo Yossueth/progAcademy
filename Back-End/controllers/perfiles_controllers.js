@@ -40,7 +40,7 @@ const put_Perfiles = async (req, res) => {
     const perfil = await Perfiles.findByPk(id);
     if (!perfil) return res.status(404).json({ error: "perfil no encontrado" });
 
-    await curso.update({
+    await perfil.update({
       usuario_id,
       biografia,
       foto_perfi,
@@ -60,7 +60,7 @@ const delete_Perfiles = async (req, res) => {
     const perfil = await Perfiles.findByPk(id);
     if (!perfil) return res.status(404).json({ error: "perfil no encontrado" });
 
-    await pago.destroy();
+    await perfil.destroy();
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: "error al eliminar al perfil." });

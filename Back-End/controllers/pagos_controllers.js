@@ -27,7 +27,7 @@ const post_Pagos = async (req, res) => {
   } catch (error) {
     console.error(error);
 
-    res.status(500).json({ error: "Error al crear al Pagos" });
+    res.status(500).json({ error: "Error al crear los Pagos" });
   }
 };
 
@@ -41,7 +41,7 @@ const put_Pagos = async (req, res) => {
     const pago = await Pagos.findByPk(id);
     if (!pago) return res.status(404).json({ error: "Pagos no encontrado" });
 
-    await curso.update({
+    await pago.update({
       cantidad,
       fecha_pago,
       usuario_id,

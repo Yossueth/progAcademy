@@ -65,7 +65,7 @@ const put_Cursos = async (req, res) => {
       solicitud_id,
       valoraciones_id,
     });
-    res.status(200).json(categoria);
+    res.status(200).json(curso);
   } catch (error) {
     res.status(500).json({ error: "error al actualizar al Cursos." });
   }

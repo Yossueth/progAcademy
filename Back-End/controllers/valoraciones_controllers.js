@@ -45,7 +45,7 @@ const put_Valoraciones = async (req, res) => {
     if (!valoracion)
       return res.status(404).json({ error: "Valoraciones no encontrado" });
 
-    await curso.update({
+    await valoracion.update({
       calificacion,
       comentario,
       fecha_valoracion,

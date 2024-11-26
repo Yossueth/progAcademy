@@ -24,7 +24,7 @@ module.exports = {
         allowNull: false,
       },
       foto_perfil: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {

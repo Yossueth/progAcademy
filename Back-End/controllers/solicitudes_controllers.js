@@ -1,10 +1,10 @@
-const { solicitudes } = require("../models"); // Asegúrate de que este nombre coincida con lo que exportas en el archivo de modelos
+const { Solicitudes } = require("../models"); // Asegúrate de que este nombre coincida con lo que exportas en el archivo de modelos
 
 //----------------------Get------------------------//
 
 const get_all_solicitudes = async (req, res) => {
   try {
-    const solicitud = await solicitudes.findAll();
+    const solicitud = await Solicitudes.findAll();
     res.status(200).json(solicitud);
   } catch (error) {
     console.error(error); // Imprimir error para depuración
@@ -14,21 +14,21 @@ const get_all_solicitudes = async (req, res) => {
 
 //----------------------Post------------------------//
 
-const post_solicitudes = async (req, res) => {
-  try {
-    const { usuario_id, fecha_solicitud, estado } = req.body;
-    const solicitud = await solicitudes.create({
-      usuario_id,
-      fecha_solicitud,
-      estado,
-    });
-    res.status(201).json(solicitud);
-  } catch (error) {
-    console.error(error);
+  const post_solicitudes = async (req, res) => {
+    try {
+      const { usuario_id, fecha_solicitud, estado } = req.body;
+      const solicitud = await Solicitudes.create({
+        usuario_id,
+        fecha_solicitud,
+        estado,
+      });
+      res.status(201).json(solicitud);
+    } catch (error) {
+      console.error(error);
 
-    res.status(500).json({ error: "Error al crear al solicitud" });
-  }
-};
+      res.status(500).json({ error: "Error al crear al solicitud" });
+    }
+  };
 
 //----------------------Put------------------------//
 
@@ -37,11 +37,11 @@ const put_solicitudes = async (req, res) => {
     const { id } = req.params;
     const { usuario_id, fecha_solicitud, estado } = req.body;
 
-    const solicitud = await solicitudes.findByPk(id);
+    const solicitud = await Solicitudes.findByPk(id);
     if (!solicitud)
       return res.status(404).json({ error: "solicitud no encontrado" });
 
-    await curso.update({
+    await solicitud.update({
       usuario_id,
       fecha_solicitud,
       estado,
@@ -58,7 +58,7 @@ const delete_solicitudes = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const solicitud = await solicitudes.findByPk(id);
+    const solicitud = await Solicitudes.findByPk(id);
     if (!solicitud)
       return res.status(404).json({ error: "solicitud no encontrado" });
 
