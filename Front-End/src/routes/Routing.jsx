@@ -3,7 +3,7 @@ import Registro from "../pages/Registro";
 const Routing = () => {
   return (
     <div>
-      <Registro />
+      <Route path="/" element={<Registro />} />
     </div>
   );
 };
