@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Registro from "../pages/Registro";
+import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
+import { getUsers, postUsersRegister } from "../services/authServices";
 
 const FormRegistro = () => {
-  const [nombre, setNombre] = useState("");
+  const [nombre_usuario, setNombre_usuario] = useState("");
   const [apellido, setApellido] = useState("");
-  const [email, setEmail] = useState("");
+  const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
@@ -12,42 +14,60 @@ const FormRegistro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userList = usuarios; //aqui haria el get
+    try {
+      // Obtener lista de usuarios del backend
+      const userList = await getUsers();
 
-    const userRegister = userList.find((user) => user.email === email);
+      // Verificar si el correo ya está registrado
+      const existingUser = userList.find((user) => user.correo === correo);
+      if (existingUser) {
+        Swal.fire({
+          icon: "error",
+          title: "Correo ya registrado",
+          text: "Un usuario con esa dirección de correo electrónico ya está registrado.",
+        });
+        return;
+      }
 
-    if (userRegister) {
+      const newUser = {
+        nombre_usuario: nombre_usuario,
+        apellido: apellido,
+        correo: correo,
+        contrasena: password,
+        rol_id: 1,
+        especialidad_id: null
+      };
+
+
+      await postUsersRegister(newUser);
+      Swal.fire({
+        icon: "success",
+        title: "Registro exitoso",
+        text: "Tu cuenta ha sido creada exitosamente. Ahora puedes iniciar sesión.",
+      });
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Error durante el registro:", error);
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "Un usuario con esa dirección de correo electrónico ya está registrado 😭!",
+        title: "Error en el registro",
+        text: "Ocurrió un error al intentar registrarte. Por favor, inténtalo más tarde.",
       });
-      return;
     }
-
-    const objectUsers = {
-      nombre: nombre,
-      apellido: apellido,
-      email: email,
-      password: password,
-    };
-
-    await post(objectUsers); // aqui de haria el post
-    Swal.fire("Registro exitoso!");
-    navigate("/login");
   };
 
   return (
     <div>
       <section className="sectionRegistro">
         <h2>Registro</h2>
-        <form id="formRegistro">
+        <form id="formRegistro" onSubmit={handleSubmit}>
           <label>Nombre</label>
           <input
             type="text"
             placeholder="Ingrese su nombre"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            value={nombre_usuario}
+            onChange={(e) => setNombre_usuario(e.target.value)}
             required
           />
           <label>Apellido</label>
@@ -62,8 +82,8 @@ const FormRegistro = () => {
           <input
             type="email"
             placeholder="Ingrese su email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
             required
           />
           <label>Contraseña</label>
@@ -74,9 +94,9 @@ const FormRegistro = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <input type="submit" value={"Registro"} />
+          <input type="submit" value="Registro" />
           <p>
-            Ya tienes una cuenta? <Link to="/login"></Link>
+            Ya tienes una cuenta? <Link to="/login">Login</Link>
           </p>
         </form>
       </section>
