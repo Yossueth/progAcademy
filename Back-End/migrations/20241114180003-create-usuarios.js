@@ -25,10 +25,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      fecha_registro: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       rol_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

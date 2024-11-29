@@ -51,14 +51,6 @@ module.exports = (sequelize) => {
           len: [8, 100], // Contraseña mínima de 8 caracteres
         },
       },
-      fecha_registro: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          isDate: true, // Valida que sea una fecha
-          notEmpty: true,
-        },
-      },
       rol_id: {
         type: DataTypes.INTEGER,
         allowNull: false,

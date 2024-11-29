@@ -13,10 +13,6 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
-      fecha_pago: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       usuario_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

@@ -20,14 +20,6 @@ module.exports = (sequelize) => {
           notEmpty: true, // No puede estar vacío
         },
       },
-      fecha_pago: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          isDate: true, // Validar que sea una fecha
-          notEmpty: true, // No puede estar vacío
-        },
-      },
       usuario_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
