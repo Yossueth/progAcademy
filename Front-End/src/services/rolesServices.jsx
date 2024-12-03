@@ -66,7 +66,7 @@ export async function getRoles() {
   // DELETE
   export async function deleteUsers(id) {
     try {
-      const response = await fetch(`http://localhost:3000/productos/${id}`, {
+      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {

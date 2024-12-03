@@ -2,6 +2,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { getUsers, postUsersRegister } from "../services/authServices";
+import "../css/registro.css"
 
 const FormRegistro = () => {
   const [nombre_usuario, setNombre_usuario] = useState("");
@@ -62,7 +63,7 @@ const FormRegistro = () => {
       <section className="sectionRegistro">
         <h2>Registro</h2>
         <form id="formRegistro" onSubmit={handleSubmit}>
-          <label>Nombre</label>
+          <label className="texto">Nombre</label>
           <input
             type="text"
             placeholder="Ingrese su nombre"
@@ -70,7 +71,7 @@ const FormRegistro = () => {
             onChange={(e) => setNombre_usuario(e.target.value)}
             required
           />
-          <label>Apellido</label>
+          <label className="texto">Apellido</label>
           <input
             type="text"
             placeholder="Ingrese su apellido"
@@ -78,7 +79,7 @@ const FormRegistro = () => {
             onChange={(e) => setApellido(e.target.value)}
             required
           />
-          <label>Email</label>
+          <label className="texto">Email</label>
           <input
             type="email"
             placeholder="Ingrese su email"
@@ -86,7 +87,7 @@ const FormRegistro = () => {
             onChange={(e) => setCorreo(e.target.value)}
             required
           />
-          <label>Contraseña</label>
+          <label className="texto">Contraseña</label>
           <input
             type="password"
             placeholder="Ingrese su contraseña"

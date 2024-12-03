@@ -2,30 +2,39 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { postUsersLogin } from "../services/LoginServices";
-import { getUsers } from "../services/authServices";
+import { jwtDecode } from "jwt-js-decode";
+import "../css/login.css"
 
 const FormLogin = () => {
   const [correo, setCorreo] = useState("");
-  const [password, setpassword] = useState("");
-  const navigate = useNavigate()
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await postUsersLogin(correo, password);
-       Swal.fire({
+      const encrypted_token_JSON = await postUsersLogin(correo, password); // Obtengo el token encriptado del servidor
+      const encrypted_token = encrypted_token_JSON.token;
+
+      sessionStorage.setItem("token", encrypted_token); // Guardo el token encriptado
+
+      // Desencripto el token para usarlo inmediatamente
+      const token = jwtDecode(encrypted_token);
+      console.log(token);
+
+      Swal.fire({
         icon: "success",
         title: "Login exitoso",
-        text: "El inicio de sesión fue exitoso!",
+        text: `Bienvenido`,
       });
-      navigate('/home')
-      return;
-    }catch{
+
+      navigate("/home");
+    } catch {
       Swal.fire({
         icon: "error",
-        title: "Login error",
-        text: "El inicio de sesión falló!",
+        title: "Error de inicio de sesión",
+        text: "Correo o contraseña incorrectos.",
       });
     }
   };
@@ -38,20 +47,20 @@ const FormLogin = () => {
           <label>Email</label>
           <input
             type="email"
-            placeholder="ingrese su email"
+            placeholder="Ingrese su email"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
           />
           <label>Contraseña</label>
           <input
             type="password"
-            placeholder="ingrese su password"
+            placeholder="Ingrese su contraseña"
             value={password}
-            onChange={(e) => setpassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <input type="submit" value={"Iniciar sesion"} />
+          <input type="submit" value={"Iniciar sesión"} />
           <p>
-            Aun no tienes una cuenta? <Link to="/">Registro</Link>
+            ¿Aún no tienes una cuenta? <Link to="/">Regístrate</Link>
           </p>
         </form>
       </section>

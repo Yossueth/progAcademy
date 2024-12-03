@@ -1,0 +1,161 @@
+:root {
+    --color-primario: #1A237E; 
+    --color-secundario: #ffd700; /* Dorado */
+    --color-fondo: #f4a460; /* Color arena */
+    --color-texto: #333; /* Color del texto */
+    --color-icono: #FFA726; /* Cobre */
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-primario);
+    padding: 10px 20px;
+    color: var(--color-fondo);
+  }
+  
+  .logo img {
+    top: 5px;
+    margin: -10px;
+    height: 80px;
+    position: absolute;
+  }
+  
+  .search input {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+    margin-right: 200px;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-icon {
+    color: var(--color-icono);
+    margin-left: 15px;
+    text-decoration: none;
+  }
+  
+  .nav-icon:hover {
+    color: var(--color-secundario);
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-toggle {
+    color: var(--color-icono);
+    text-decoration: none;
+  }
+  
+  .dropdown-toggle:hover {
+    color: var(--color-secundario);
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+  }
+  
+  .dropdown-menu li {
+    margin: 0;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: var(--color-texto);
+    text-decoration: none;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .icono1 {
+    margin-right: 20px;
+  }
+  
+  #CerrarSession {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+  }
+  .cerrarSesion {
+    border-top: 1px solid gainsboro;
+  }
+  
+  #buscador{
+    margin-left: 40px;
+  }
+  
+  @media (max-width: 320px) {
+    .navbar {
+      padding: 10px;
+      align-items: flex-start;
+    }
+  
+    .logo img {
+      height: 60px;
+      margin: 0;
+    }
+  
+    .search input {
+      width: 100%;
+      font-size: 14px;
+      margin-top: 10px;
+      margin-left: 90px;
+    }
+  
+    .nav {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      margin-left: 170px;
+    }
+  
+    .nav-icon {
+      margin-left: 0;
+      margin-top: 5px;
+    }
+  
+    .dropdown-menu {
+      width: 100%;
+      position: static;
+    }
+  
+    .dropdown-menu a {
+      padding: 8px;
+    }
+  
+    #CerrarSession {
+      margin-top: 5px;
+    }
+  }
+  

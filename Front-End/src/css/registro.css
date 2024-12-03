@@ -1,0 +1,118 @@
+body {
+  font-family: var(--font-mono);
+  background-color: #f5f5f5;
+}
+
+
+.sectionRegistro {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  margin-top: -70px;
+}
+
+.sectionRegistro h2 {
+  text-align: center;
+  width: 100%;
+  font-size: 2.5em;
+  margin-top: 70px;
+  color: #002f6c;
+}
+
+.sectionRegistro form {
+  padding: 1.5em;
+  flex-wrap: wrap;
+  max-width: 500px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid #b87333;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sectionRegistro form label {
+  width: 100%;
+  padding: 0.2em;
+  margin-bottom: 0.5em;
+  text-align: center;
+  color: #333333;
+}
+
+.sectionRegistro form input {
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 0.8em;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  background-color: #f9f9f9;
+  text-align: center;
+  color: #000000;
+}
+
+.sectionRegistro form input[type="submit"] {
+  background-color: #002f6c;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.sectionRegistro form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.sectionRegistro form input[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+.sectionRegistro p {
+  color: #333333;
+}
+
+.sectionRegistro p a {
+  text-decoration: none;
+  color: #1773ec;
+}
+
+@media (max-width: 320px) {
+  body {
+    padding: 0.5em;
+  }
+
+  .sectionRegistro {
+    padding: 0.5em;
+    margin-top: -30px;
+    height: auto;
+  }
+
+  .sectionRegistro h2 {
+    font-size: 1.8em;
+  }
+
+  .sectionRegistro form {
+    padding: 1em;
+    max-width: 90%;
+  }
+
+  .sectionRegistro form label {
+    font-size: 0.9em;
+  }
+
+  .sectionRegistro form input {
+    padding: 0.6em;
+    font-size: 0.9em;
+  }
+
+  .sectionRegistro form input[type="submit"] {
+    font-size: 0.9em;
+    padding: 0.8em;
+  }
+
+  .sectionRegistro p {
+    font-size: 0.9em;
+  }
+}
