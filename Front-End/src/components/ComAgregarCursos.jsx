@@ -13,7 +13,7 @@ const ComAgregarCursos = () => {
 
   return (
     <div>
-      <div className="header">
+      <div className="gestionCursos">
         <h1>Gestión de cursos</h1>
         <button className="btnAgregar" onClick={abrirModal}>
           Agregar cursos

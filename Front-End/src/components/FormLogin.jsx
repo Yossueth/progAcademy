@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { postUsersLogin } from "../services/LoginServices";
 import { jwtDecode } from "jwt-js-decode";
-import "../css/login.css"
+import "../css/login.css";
 
 const FormLogin = () => {
   const [correo, setCorreo] = useState("");
@@ -18,10 +18,6 @@ const FormLogin = () => {
       const encrypted_token = encrypted_token_JSON.token;
 
       sessionStorage.setItem("token", encrypted_token); // Guardo el token encriptado
-
-      // Desencripto el token para usarlo inmediatamente
-      const token = jwtDecode(encrypted_token);
-      console.log(token);
 
       Swal.fire({
         icon: "success",

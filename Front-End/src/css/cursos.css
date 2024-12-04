@@ -1,5 +1,4 @@
-.header {
-  display: flex;
+.gestionCursos {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,54 +34,54 @@
 
 /* Fondo desenfocado del modal */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px); /* Efecto de desenfoque */
-    z-index: 1000;
-  }
-  
-  /* Modal */
-  .modal {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    width: 400px;
-  }
-  
-  .modal h2 {
-    margin-bottom: 20px;
-  }
-  
-  .modal label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .modal input,
-  .modal textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .modal button {
-    padding: 10px 15px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  z-index: 1000;
+}
+
+/* Modal */
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 400px;
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 /*   
   .modal .btnGuardar {
     background: #007bff;
@@ -101,4 +100,3 @@
   .modal .btnCerrar:hover {
     background: #a71d2a;
   } */
-  
