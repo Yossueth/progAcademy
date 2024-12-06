@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import AgregarCursos from "../pages/AgregarCursos";
 import Administracion from "../pages/administracion";
+import Solicitudes from "../components/Solicitudes";
 
 const Routing = () => {
   return (
@@ -15,6 +16,8 @@ const Routing = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/agregarCursos" element={<AgregarCursos />} />
           <Route path="/administracion" element={<Administracion />} />
+            <Route path="/solicitudes" element={<Solicitudes />} />
+          <Route />
         </Routes>
       </Router>
     </div>

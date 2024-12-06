@@ -2,7 +2,6 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { postUsersLogin } from "../services/LoginServices";
-import { jwtDecode } from "jwt-js-decode";
 import "../css/login.css";
 
 const FormLogin = () => {

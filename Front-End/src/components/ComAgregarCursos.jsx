@@ -79,7 +79,6 @@ const ComAgregarCursos = () => {
                 </select>
               </label>
               <br />
-
               <button type="submit" className="btnGuardar">
                 Guardar
               </button>

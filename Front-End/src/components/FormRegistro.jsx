@@ -1,22 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { getUsers, postUsersRegister } from "../services/authServices";
-import "../css/registro.css"
+import "../css/registro.css";
+import { getRoles } from "../services/rolesServices";
 
 const FormRegistro = () => {
   const [nombre_usuario, setNombre_usuario] = useState("");
   const [apellido, setApellido] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+  const [rol, setRol] = useState([]);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    async function obtenerRoles() {
+      const roles = await getRoles();
+      setRol(roles);
+    }
+    obtenerRoles();
+  }, []);
+
+  const defaultRol = rol.find((rol) => rol.id === 1);
+
+  // Obtener lista de usuarios del backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Obtener lista de usuarios del backend
       const userList = await getUsers();
 
       // Verificar si el correo ya está registrado
@@ -35,10 +47,9 @@ const FormRegistro = () => {
         apellido: apellido,
         correo: correo,
         contrasena: password,
-        rol_id: 1,
-        especialidad_id: null
+        rol_id: defaultRol.id,
+        especialidad_id: null,
       };
-
 
       await postUsersRegister(newUser);
       Swal.fire({

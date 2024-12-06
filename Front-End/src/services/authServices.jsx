@@ -1,3 +1,6 @@
+const token = sessionStorage.getItem("token");
+const permisosToken = 'Bearer ' + token
+
 // GET
 export async function getUsers() {
   try {
@@ -37,7 +40,7 @@ export async function postUsersRegister(data) {
 }
 
 // PUT
-export async function putUsers(data, id) {
+export async function putUsers(id) {
   try {
     const response = await fetch(
       `http://localhost:3000/usuarios/registro/${id}`,
@@ -45,8 +48,9 @@ export async function putUsers(data, id) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": permisosToken
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(id),
       }
     );
 
@@ -61,6 +65,27 @@ export async function putUsers(data, id) {
     throw error;
   }
 }
+
+export async function patchUsers(newRolId, id) {
+  try {
+    const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+      method: 'PATCH',  // Método PATCH
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ rol_id: newRolId }),  // Solo el campo que deseas actualizar
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud PATCH');
+    }
+    
+    const data = await response.json();
+    console.log('Respuesta del servidor:', data);
+  } catch (error) {
+    console.error('Error en PATCH request:', error);
+  }
+};
 
 // DELETE
 export async function deleteUsers(id) {
