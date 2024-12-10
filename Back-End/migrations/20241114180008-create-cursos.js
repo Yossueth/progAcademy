@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      archivo: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
       descripcion: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -37,19 +41,9 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      solicitud_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Solicitudes",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
       valoraciones_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "Valoraciones",
           key: "id",

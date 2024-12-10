@@ -65,7 +65,7 @@ const iniciarsesion = async (req, res) => {
     const usuario = await Usuarios.findOne({ where: { correo } });
 
     if (!usuario) {
-      return res.status(401).json({ message: "Credenciales incorrectas." });
+      return res.status(401).json({ message: "Usuario no valido." });
     }
 
     // Comparar la contraseña proporcionada con la almacenada
@@ -75,12 +75,12 @@ const iniciarsesion = async (req, res) => {
     );
 
     if (!esContrasenaValida) {
-      return res.status(401).json({ message: "Credenciales incorrectas." });
+      return res.status(401).json({ message: "Contraseña incorrecta." });
     }
 
     // Generar el token JWT
     const token = jwt.sign(
-      { id: usuario.id, correo: usuario.correo, rol:usuario.rol_id },
+      { id: usuario.id, correo: usuario.correo, rol: usuario.rol_id },
       jwtSecret,
       {
         expiresIn: jwtExpiresIn,
@@ -94,8 +94,62 @@ const iniciarsesion = async (req, res) => {
   }
 };
 
+const patch_Usuarios = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      nombre_usuario,
+      apellido,
+      correo,
+      contrasena,
+      fecha_registro,
+      rol_id,
+      especialidad_id,
+    } = req.body;
+
+    const usuario = await Usuarios.findByPk(id);
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    await usuario.update({
+      nombre_usuario,
+      apellido,
+      correo,
+      contrasena,
+      fecha_registro,
+      rol_id,
+      especialidad_id,
+    });
+
+    res.status(200).json(usuario);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al actualizar al usuario." });
+  }
+};
+
+//----------------------Delete------------------------//
+
+const delete_Usuarios = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const usuario = await Usuarios.findByPk(id);
+    if (!usuario)
+      return res.status(404).json({ error: "usuario no encontrado" });
+
+    await usuario.destroy();
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "error al eliminar el usuario." });
+  }
+};
+
 module.exports = {
   iniciarsesion,
   registroUsers,
   get_all_usuarios,
+  delete_Usuarios,
+  patch_Usuarios,
 };

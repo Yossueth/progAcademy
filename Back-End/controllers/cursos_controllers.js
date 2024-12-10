@@ -16,27 +16,23 @@ const get_all_Cursos = async (req, res) => {
 
 const post_Cursos = async (req, res) => {
   try {
-    const {
-      nombre_curso,
-      descripcion,
-      categoria_id,
-      usuario_id,
-      solicitud_id,
-      valoraciones_id,
-    } = req.body;
-    const curso = await Cursos.create({
-      nombre_curso,
-      descripcion,
-      categoria_id,
-      usuario_id,
-      solicitud_id,
-      valoraciones_id,
-    });
-    res.status(201).json(curso);
-  } catch (error) {
-    console.error(error);
+    const { nombre_curso, archivo, descripcion, categoria_id, usuario_id } = req.body;
 
-    res.status(500).json({ error: "Error al crear al Cursos" });
+    if (!nombre_curso || !archivo || !descripcion || !categoria_id || !usuario_id) {
+      return res.status(400).json({ error: "Todos los campos son obligatorios." });
+    }
+
+    const nuevoCurso = await Cursos.create({
+      nombre_curso,
+      archivo,
+      descripcion,
+      categoria_id,
+      usuario_id,
+    });
+
+    res.status(201).json(nuevoCurso);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 

@@ -10,10 +10,9 @@ module.exports = (sequelize) => {
 
 
       this.hasOne(models.Perfiles, { foreignKey: "usuario_id" });
-
+      
       this.hasMany(models.Cursos, { foreignKey: "usuario_id", as: 'usuarios'});
       this.hasMany(models.Pagos, { foreignKey: "usuario_id" });
-      this.hasMany(models.Solicitudes, { foreignKey: "usuario_id" });
       this.hasMany(models.Valoraciones, { foreignKey: "usuario_id" });
     }
   }

@@ -28,8 +28,6 @@ sequelize
     console.error("No se pudo conectar a la base de datos:", error)
   );
 
-app.use("/auth", authRoutes);
-
 app.use("/categorias", verificarToken,categorias_routes);
 app.use("/cursos", cursos_routes);
 app.use("/especialidad", especialidad_routes);
