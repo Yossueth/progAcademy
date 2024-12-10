@@ -18,7 +18,6 @@ export async function postUsersLogin(correo, contrasena) {
       }
   
       const result = await response.json();
-      console.log(result)
       return result;
     } catch (error) {
       console.error("Error in POST request:", error.message);

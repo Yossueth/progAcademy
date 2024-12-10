@@ -5,7 +5,6 @@ import Admin from "../components/Admin";
 const administracion = () => {
   return (
     <div>
-      {/* <MenuLateral/> */}
       <Admin />
     </div>
   );

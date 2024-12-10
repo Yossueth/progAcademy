@@ -15,8 +15,7 @@ const MenuLateral = ({setRolElegido}) => {
         <button onClick={() => {manejarClick(2)}} className="menu-item">Profesores</button>
         <button onClick={() => {manejarClick(3)}} className="menu-item">Admins</button>
       </div>
-      <Link className="menu-item" to="/solicitudes">Solicitides</Link>
-      <button className="menu-item">Cerrar sesion</button>
+      <button className="menu-item" id="cerrarSesion">Cerrar sesion</button>
     </div>
   );
 };

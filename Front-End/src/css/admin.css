@@ -1,8 +1,7 @@
 .tabla-container {
-  width: 80%; /* Ajusta el ancho para que sea menos ancho */
+  width: 90%; /* Ajusta el ancho para que sea menos ancho */
   max-width: 800px;
-  margin: 20px auto; /* Centra la tabla */
-
+  margin-left: 340px; /* Centra la tabla */
 }
 
 .tabla-scroll {

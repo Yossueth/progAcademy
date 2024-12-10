@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { postUsersLogin } from "../services/LoginServices";
 import "../css/login.css";
+import { jwtDecode } from "jwt-js-decode";
 
 const FormLogin = () => {
   const [correo, setCorreo] = useState("");
@@ -15,6 +16,7 @@ const FormLogin = () => {
     try {
       const encrypted_token_JSON = await postUsersLogin(correo, password); // Obtengo el token encriptado del servidor
       const encrypted_token = encrypted_token_JSON.token;
+      const token = jwtDecode(encrypted_token);
 
       sessionStorage.setItem("token", encrypted_token); // Guardo el token encriptado
 
@@ -23,8 +25,18 @@ const FormLogin = () => {
         title: "Login exitoso",
         text: `Bienvenido`,
       });
-
-      navigate("/home");
+      if (token.payload.rol === 1) {
+        navigate("/home");
+      }
+      if (token.payload.rol === 2) {
+        navigate("/agregarCursos");
+      }
+      if (token.payload.rol === 3) {
+        navigate("/administracion");
+      }
+      if (token.payload.rol === 4) {
+        navigate("/administracion");
+      }
     } catch {
       Swal.fire({
         icon: "error",

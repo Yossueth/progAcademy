@@ -1,7 +1,7 @@
 // GET
 export async function getCursos() {
   try {
-    const response = await fetch("http://localhost:3000/usuarios/");
+    const response = await fetch("http://localhost:3000/cursos/");
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -16,7 +16,7 @@ export async function getCursos() {
 // POST
 export async function postCursos(data) {
   try {
-    const response = await fetch("http://localhost:3000/usuarios/registro", {
+    const response = await fetch("http://localhost:3000/cursos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,16 +39,13 @@ export async function postCursos(data) {
 // PUT
 export async function putCursos(data, id) {
   try {
-    const response = await fetch(
-      `http://localhost:3000/usuarios/registro/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`http://localhost:3000/cursos/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -65,7 +62,7 @@ export async function putCursos(data, id) {
 // DELETE
 export async function deleteCursos(id) {
   try {
-    const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const response = await fetch(`http://localhost:3000/cursos/${id}`, {
       method: "DELETE",
     });
     if (response.ok) {

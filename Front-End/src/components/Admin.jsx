@@ -3,10 +3,27 @@ import { getUsers, patchUsers } from "../services/authServices";
 import "../css/Admin.css";
 import Swal from "sweetalert2";
 import MenuLateral from "./MenuLateral";
+import { jwtDecode } from "jwt-js-decode";
 
 const Admin = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [rolElegido, setRolElegido] = useState(null);
+
+  const tokenEnciptado = sessionStorage.getItem("token");
+  let rolPermitido;
+
+
+  if (tokenEnciptado) {
+    try {
+      const token = jwtDecode(tokenEnciptado);
+      rolPermitido = token?.payload?.rol; 
+    } catch (error) {
+      console.error("Error al decodificar el token:", error);
+      rolPermitido = null;
+    }
+  }
+
+  const allowedRoles = [4];
 
   const traerUsuarios = useCallback(() => {
     const fetchUsuarios = async () => {
@@ -21,9 +38,9 @@ const Admin = () => {
     fetchUsuarios();
   }, []);
 
-  useEffect(()=>{
-    traerUsuarios()
-  }, [traerUsuarios])
+  useEffect(() => {
+    traerUsuarios();
+  }, [traerUsuarios]);
 
   const editRol = async (id, newRolId, nombre_usuario) => {
     try {
@@ -51,9 +68,10 @@ const Admin = () => {
     }
   };
 
-  const filtroUsuarios = rolElegido === null
-  ? usuarios 
-  : usuarios.filter( (usuarios) => usuarios.rol_id === rolElegido);  
+  const filtroUsuarios =
+    rolElegido === null
+      ? usuarios
+      : usuarios.filter((usuarios) => usuarios.rol_id === rolElegido);
 
   return (
     <div className="tabla-container">
@@ -88,7 +106,12 @@ const Admin = () => {
                   >
                     <option value={1}>Estudiante</option>
                     <option value={2}>Profesor</option>
-                    <option value={3}>Administrador</option>
+                    {allowedRoles.includes(rolPermitido) && (
+                      <>
+                        <option value={3}>Administrador</option>
+                        <option value={4}>SuperAdmin</option>
+                      </>
+                    )}
                   </select>
                 </td>
               </tr>
@@ -96,7 +119,7 @@ const Admin = () => {
           </tbody>
         </table>
       </div>
-      <MenuLateral setRolElegido={setRolElegido}/>
+      <MenuLateral setRolElegido={setRolElegido} />
     </div>
   );
 };

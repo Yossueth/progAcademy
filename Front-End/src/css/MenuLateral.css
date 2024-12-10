@@ -14,6 +14,10 @@
 .filtrarTabla {
   text-align: center;
 }
+#cerrarSesion {
+  margin-top: 282px;
+  border-top: 1px solid #3949ab;
+}
 .menu-item {
   display: block;
   width: 100%;
