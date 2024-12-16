@@ -16,16 +16,35 @@ const get_all_Cursos = async (req, res) => {
 
 const post_Cursos = async (req, res) => {
   try {
-    const { nombre_curso, archivo, descripcion, categoria_id, usuario_id } = req.body;
+    const {
+      nombre_curso,
+      archivo,
+      miniatura,
+      descripcion,
+      precio,
+      categoria_id,
+      usuario_id,
+    } = req.body;
 
-    if (!nombre_curso || !archivo || !descripcion || !categoria_id || !usuario_id) {
-      return res.status(400).json({ error: "Todos los campos son obligatorios." });
+    if (
+      !nombre_curso ||
+      !archivo ||
+      !miniatura ||
+      !descripcion ||
+      !categoria_id ||
+      !usuario_id
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Todos los campos son obligatorios." });
     }
 
     const nuevoCurso = await Cursos.create({
       nombre_curso,
       archivo,
+      miniatura,
       descripcion,
+      precio,
       categoria_id,
       usuario_id,
     });
@@ -43,11 +62,12 @@ const put_Cursos = async (req, res) => {
     const { id } = req.params;
     const {
       nombre_curso,
+      archivo,
+      miniatura,
       descripcion,
+      precio,
       categoria_id,
       usuario_id,
-      solicitud_id,
-      valoraciones_id,
     } = req.body;
 
     const curso = await Cursos.findByPk(id);
@@ -55,11 +75,12 @@ const put_Cursos = async (req, res) => {
 
     await curso.update({
       nombre_curso,
+      archivo,
+      miniatura,
       descripcion,
+      precio,
       categoria_id,
       usuario_id,
-      solicitud_id,
-      valoraciones_id,
     });
     res.status(200).json(curso);
   } catch (error) {

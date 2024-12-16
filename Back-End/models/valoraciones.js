@@ -5,8 +5,8 @@ const { Model, DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   class Valoraciones extends Model {
     static associate(models) {
-      this.belongsTo(models.Usuarios, { foreignKey: "usuario_id",  });
-      this.hasMany(models.Cursos, { foreignKey: "valoraciones_id", as: 'valoraciones'});
+      this.belongsTo(models.Usuarios, { foreignKey: "usuario_id" });
+      this.belongsTo(models.Cursos, { foreignKey: "curso_id" });
     }
   }
 
@@ -41,6 +41,14 @@ module.exports = (sequelize) => {
         allowNull: false,
         references: {
           model: "Usuarios", // Nombre de la tabla relacionada
+          key: "id",
+        },
+      },
+      cursos_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false, // Puede ser opcional si no todas tienen solicitud
+        references: {
+          model: "Cursos", // Nombre de la tabla relacionada
           key: "id",
         },
       },

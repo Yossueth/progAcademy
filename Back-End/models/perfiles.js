@@ -15,19 +15,16 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Usuarios", // Nombre de la tabla relacionada
+          model: "Usuarios", 
           key: "id",
         },
       },
       biografia: {
         type: DataTypes.STRING,
-        allowNull: true, // Puede ser opcional
-        validate: {
-          len: [0, 500], // Máximo 500 caracteres
-        },
+        allowNull: true, 
       },
       foto_perfil: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
     },

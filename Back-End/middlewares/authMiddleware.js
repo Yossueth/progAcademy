@@ -29,7 +29,7 @@ const verificarToken = (req, res, next) => {
 // Middleware para verificar el rol del usuario
 
 const verificarAdmin = (req) => {
-  if (req.usuario && req.usuario.rol === 3) {
+  if (req.usuario && (req.usuario.rol === 3 || req.usuario.rol === 2)) {
     return true;
   } else {
     return false;

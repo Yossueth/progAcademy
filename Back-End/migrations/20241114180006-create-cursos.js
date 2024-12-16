@@ -17,7 +17,15 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      miniatura: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
       descripcion: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      precio: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -36,16 +44,6 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Usuarios",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      valoraciones_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "Valoraciones",
           key: "id",
         },
         onUpdate: "CASCADE",

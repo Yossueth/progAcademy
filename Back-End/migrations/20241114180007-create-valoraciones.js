@@ -31,6 +31,16 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      cursos_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Cursos",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
 
       createdAt: {
         allowNull: false,

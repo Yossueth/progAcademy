@@ -12,10 +12,7 @@ module.exports = (sequelize) => {
         foreignKey: "usuario_id",
         as: "usuarios",
       });
-      this.belongsTo(models.Valoraciones, {
-        foreignKey: "valoraciones_id",
-        as: "valoraciones",
-      });
+      this.hasMany(models.Valoraciones, { foreignKey: "curso_id" });
       this.hasMany(models.Pagos, { foreignKey: "curso_id", as: "cursos" });
     }
   }
@@ -31,7 +28,15 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      miniatura: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       descripcion: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      precio: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -48,14 +53,6 @@ module.exports = (sequelize) => {
         allowNull: false,
         references: {
           model: "Usuarios", // Nombre de la tabla relacionada
-          key: "id",
-        },
-      },
-      valoraciones_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true, // Puede ser opcional si no todas tienen solicitud
-        references: {
-          model: "Valoraciones", // Nombre de la tabla relacionada
           key: "id",
         },
       },
