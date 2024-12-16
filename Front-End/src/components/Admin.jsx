@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { getUsers, patchUsers } from "../services/authServices";
+import { getUsers, patchUsers, deleteUsers } from "../services/authServices";
 import "../css/Admin.css";
 import Swal from "sweetalert2";
 import MenuLateral from "./MenuLateral";
@@ -12,11 +12,10 @@ const Admin = () => {
   const tokenEnciptado = sessionStorage.getItem("token");
   let rolPermitido;
 
-
   if (tokenEnciptado) {
     try {
       const token = jwtDecode(tokenEnciptado);
-      rolPermitido = token?.payload?.rol; 
+      rolPermitido = token?.payload?.rol;
     } catch (error) {
       console.error("Error al decodificar el token:", error);
       rolPermitido = null;
@@ -41,6 +40,37 @@ const Admin = () => {
   useEffect(() => {
     traerUsuarios();
   }, [traerUsuarios]);
+
+  const eliminar = async (id) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro que quieres eliminar este usuario?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ¡elimínalo!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteUsers(id);
+        await Swal.fire({
+          title: "¡Eliminado!",
+          text: "Tu archivo ha sido eliminado.",
+          icon: "success",
+        });
+        traerUsuarios();
+      } catch (error) {
+        console.error("Error al eliminar el producto:", error);
+        Swal.fire({
+          title: "¡Error!",
+          text: "Hubo un problema al eliminar el producto.",
+          icon: "error",
+        });
+      }
+    }
+  };
 
   const editRol = async (id, newRolId, nombre_usuario) => {
     try {
@@ -74,50 +104,61 @@ const Admin = () => {
       : usuarios.filter((usuarios) => usuarios.rol_id === rolElegido);
 
   return (
-    <div className="tabla-container">
-      <h1>Lista de Usuarios</h1>
-      <div className="tabla-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Email</th>
-              <th>Rol</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtroUsuarios.map((usuario) => (
-              <tr key={usuario.id}>
-                <td>{usuario.nombre_usuario}</td>
-                <td>{usuario.apellido}</td>
-                <td>{usuario.correo}</td>
-                <td>
-                  <select
-                    id="inputSelectAdmin"
-                    defaultValue={usuario.rol_id}
-                    onChange={(e) =>
-                      editRol(
-                        usuario.id,
-                        parseInt(e.target.value),
-                        usuario.nombre_usuario
-                      )
-                    }
-                  >
-                    <option value={1}>Estudiante</option>
-                    <option value={2}>Profesor</option>
-                    {allowedRoles.includes(rolPermitido) && (
-                      <>
-                        <option value={3}>Administrador</option>
-                        <option value={4}>SuperAdmin</option>
-                      </>
-                    )}
-                  </select>
-                </td>
+    <div>
+      <div className="tabla-container">
+        <h1 className="textoListaUsuarios">Lista de Usuarios</h1>
+        <div className="tabla-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th className="tituloTabla">Nombre</th>
+                <th className="tituloTabla">Apellido</th>
+                <th className="tituloTabla">Email</th>
+                <th className="tituloTabla">Rol</th>
+                <th className="tituloTabla">Eliminar</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="color-table">
+              {filtroUsuarios.map((usuario) => (
+                <tr key={usuario.id}>
+                  <td>{usuario.nombre_usuario}</td>
+                  <td>{usuario.apellido}</td>
+                  <td>{usuario.correo}</td>
+                  <td className="tablaRol">
+                    <select
+                      id="inputSelectAdmin"
+                      defaultValue={usuario.rol_id}
+                      onChange={(e) =>
+                        editRol(
+                          usuario.id,
+                          parseInt(e.target.value),
+                          usuario.nombre_usuario
+                        )
+                      }
+                    >
+                      <option value={1}>Estudiante</option>
+                      <option value={2}>Profesor</option>
+                      {allowedRoles.includes(rolPermitido) && (
+                        <>
+                          <option value={3}>Administrador</option>
+                          <option value={4}>SuperAdmin</option>
+                        </>
+                      )}
+                    </select>
+                  </td>
+                  <td>
+                    <button
+                      className="btnEliminar"
+                      onClick={() => eliminar(usuario.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <MenuLateral setRolElegido={setRolElegido} />
     </div>

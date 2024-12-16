@@ -1,16 +1,16 @@
 :root {
-    --color-primario: #1A237E; 
-    --color-secundario: #ffd700; /* Dorado */
+    --color-primario: #000000; 
+    --color-secundario: #50e6d4; /* Dorado */
     --color-fondo: #f4a460; /* Color arena */
     --color-texto: #333; /* Color del texto */
-    --color-icono: #FFA726; /* Cobre */
+    --color-icono: #43a196; /* Cobre */
   }
   body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  
+
   .navbar {
     display: flex;
     align-items: center;
@@ -18,13 +18,14 @@
     background-color: var(--color-primario);
     padding: 10px 20px;
     color: var(--color-fondo);
+    border-bottom: solid #121212 2px;
   }
   
   .logo img {
     top: 5px;
     margin: -10px;
     height: 80px;
-    position: absolute;
+
   }
   
   .search input {

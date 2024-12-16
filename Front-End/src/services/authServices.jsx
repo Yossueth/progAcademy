@@ -94,7 +94,6 @@ export async function deleteUsers(id) {
       method: "DELETE",
     });
     if (response.ok) {
-      console.log(`Task ${id} deleted`);
       return true;
     } else {
       console.error("Error deleting task:", response.statusText);

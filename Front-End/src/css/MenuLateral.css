@@ -4,7 +4,7 @@
   left: 0;
   height: 100%;
   width: 200px;
-  background-color: #1a237e;
+  background-color: #43a196;
   border-radius: 0;
   padding: 10px 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -16,7 +16,7 @@
 }
 #cerrarSesion {
   margin-top: 282px;
-  border-top: 1px solid #3949ab;
+  border-top: 1px solid #fff;
 }
 .menu-item {
   display: block;
@@ -29,7 +29,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border-bottom: 1px solid #3949ab;
+  border-bottom: 1px solid #ffffff;
 }
 
 .menu-item:last-child {
@@ -37,10 +37,30 @@
 }
 
 .menu-item:hover {
-  background-color: #3949ab;
+  background-color: #45d4c4;
   border-radius: 4px;
 }
 
 .menu-item:active {
-  background-color: #283593;
+  background-color: #164540;
+}
+
+/* Ocultar por defecto */
+.accordion-content.hidden {
+  display: none;
+}
+
+/* Mostrar cuando está visible */
+.accordion-content.visible {
+  display: block;
+}
+
+/* Transición suave para un efecto más atractivo */
+.accordion-content {
+  transition: max-height 0.3s ease-in-out;
+}
+
+.accordion-header {
+  cursor: pointer;
+  font-weight: bold;
 }

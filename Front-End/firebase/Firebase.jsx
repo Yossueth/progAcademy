@@ -25,22 +25,26 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 const cargarArchivos = async (file) => {
-    try {
-        // Create a reference for the file
-        const fileRef = ref(storage, v4()); 
-    
-        // Upload the file
-        await uploadBytes(fileRef, file);
-    
-        // Get the file's download URL
-        const downloadURL = await getDownloadURL(fileRef);
-    
-        return downloadURL;
-        
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        throw error;
-      }
-}
+  if (!file) {
+      console.error("No se ha proporcionado un archivo para subir.");
+  }
+  try {
+      const fileRef = ref(storage, v4());
+      console.log("Referencia del archivo creada:", fileRef);
+
+      await uploadBytes(fileRef, file);
+      console.log("Archivo subido exitosamente");
+
+      const downloadURL = await getDownloadURL(fileRef);
+      
+      console.log("URL de descarga:", downloadURL);
+      return downloadURL;
+
+  } catch (error) {
+      console.error("Error al subir el archivo o obtener la URL:", error);
+      throw error;
+  }
+};
+
 
 export default cargarArchivos;

@@ -14,27 +14,25 @@ export async function getCursos() {
 }
 
 // POST
-export async function postCursos(data) {
+export const postCursos = async (curso) => {
   try {
     const response = await fetch("http://localhost:3000/cursos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(curso),
     });
-
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    const result = await response.json();
-    return result;
+    return await response.json();
   } catch (error) {
-    console.error("Error in POST request:", error.message);
+    console.error("Error in POST request:", error);
     throw error;
   }
-}
+};
+
 
 // PUT
 export async function putCursos(data, id) {

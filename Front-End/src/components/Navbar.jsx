@@ -2,6 +2,7 @@ import "../css/Navbar.css";
 import React, { useContext } from "react";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import AcademyContext from "./Context/AcademyContext";
+import logo from "../img/logo.png"; 
 
 const Navbar = ({ userRole }) => {
   const allowedRoles = [2];
@@ -11,7 +12,7 @@ const Navbar = ({ userRole }) => {
   return (
     <div className="navbar">
       <div className="logo">
-        <h2>ProgrAcademy</h2>
+        <img src={logo} alt="LOGO" />
       </div>
       <div className="search">
         <input

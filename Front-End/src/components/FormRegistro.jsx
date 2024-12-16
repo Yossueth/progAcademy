@@ -22,10 +22,9 @@ const FormRegistro = () => {
     obtenerRoles();
   }, []);
 
-  console.log('El rol desde la base de datos', rol)
+
 
   const defaultRol = rol.find((rol) => rol.id === 1); 
-  console.log(defaultRol);
   
 
   // Obtener lista de usuarios del backend

@@ -4,7 +4,7 @@ import Admin from "../components/Admin";
 
 const administracion = () => {
   return (
-    <div>
+    <div className="background-admin">
       <Admin />
     </div>
   );
