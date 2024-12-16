@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/cursos.css";
 import cargarArchivos from "../../firebase/Firebase";
-import { postCursos, getCursos, deleteCursos } from "../services/cursos";
+import {
+  postCursos,
+  getCursos,
+  deleteCursos,
+  putCursos,
+} from "../services/cursos";
 import { getCategorias } from "../services/categoriasServices";
 import Swal from "sweetalert2";
-// import AcademyContext from "./Context/AcademyContext";
 import { jwtDecode } from "jwt-js-decode";
 
 const ComAgregarCursos = () => {
@@ -16,20 +20,29 @@ const ComAgregarCursos = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [precio, setPrecio] = useState("");
-
-  //  const { token } = useContext(AcademyContext);
-  //  console.log(token);
+  const [cursoActual, setCursoActual] = useState(null);
 
   const tokenEnciptado = sessionStorage.getItem("token");
   const token = jwtDecode(tokenEnciptado);
 
-  const abrirModal = () => setModalOpen(true);
-  const cerrarModal = () => setModalOpen(false);
+  const abrirModal = (curso = null) => {
+    setCursoActual(curso);
+    setNombre(curso?.nombre_curso || "");
+    setDescripcion(curso?.descripcion || "");
+    setPrecio(curso?.precio || "");
+    setCategoriaSeleccionada(curso?.categoria_id || "");
+    setFile(null);
+    setModalOpen(true);
+  };
+
+  const cerrarModal = () => {
+    setModalOpen(false);
+    setCursoActual(null);
+  };
 
   const cargarArchivosFirebase = async (data) => {
-    const obtenerArchivo = data;
-    if (obtenerArchivo) {
-      const urlArchivo = await cargarArchivos(obtenerArchivo);
+    if (data) {
+      const urlArchivo = await cargarArchivos(data);
       return urlArchivo;
     }
   };
@@ -90,7 +103,6 @@ const ComAgregarCursos = () => {
 
   const cargarCurso = async (e) => {
     e.preventDefault();
-    console.log("Categoria", categoriaSeleccionada);
     try {
       const imgFile = await cargarArchivosFirebase(file);
       if (imgFile) {
@@ -104,9 +116,30 @@ const ComAgregarCursos = () => {
         };
         await postCursos(newCurso);
         cerrarModal();
+        fetchCursos();
       }
     } catch (error) {
       console.error("Error al guardar el curso:", error);
+    }
+  };
+
+  const editarCursoHandler = async () => {
+    try {
+      const imgFile = file
+        ? await cargarArchivosFirebase(file)
+        : cursoActual.archivo;
+      const updatedCurso = {
+        archivo: imgFile,
+        nombre_curso: nombre,
+        descripcion,
+        precio,
+        categoria_id: categoriaSeleccionada,
+      };
+      await putCursos(updatedCurso, cursoActual.id); 
+      cerrarModal();
+      fetchCursos();
+    } catch (error) {
+      console.error("Error al editar el curso:", error);
     }
   };
 
@@ -114,17 +147,13 @@ const ComAgregarCursos = () => {
     <div>
       <div className="gestionCursos">
         <h1>Gestión de cursos</h1>
-        <button className="btnAgregar" onClick={abrirModal}>
+        <button className="btnAgregar" onClick={() => abrirModal()}>
           Agregar cursos
         </button>
       </div>
       <div className="containerCard">
         {cursos.map((curso) => (
           <div className="card" key={curso.id}>
-            {/* <video controls width="100%">
-                <source src={curso.archivo} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video> */}
             <img
               className="imagenPrueba"
               src={curso.archivo}
@@ -135,20 +164,29 @@ const ComAgregarCursos = () => {
               <p className="descripcion">{curso.descripcion}</p>
               <p className="precio">${curso.precio}</p>
             </div>
+            <hr />
             <div className="botones">
-              <button id="margenes" onClick={() => eliminarCursos(curso.id)}>
+              <button
+                className="btnEliminarCurso"
+                onClick={() => eliminarCursos(curso.id)}
+              >
                 Eliminar
               </button>
-              <button>Editar</button>
+              <button
+                className="btnActualizarCurso"
+                onClick={() => abrirModal(curso)}
+              >
+                Editar
+              </button>
             </div>
           </div>
         ))}
       </div>
-      {/*-------------modal-------------- */}
+
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Agregar Curso</h2>
+            <h2>{cursoActual ? "Editar Curso" : "Agregar Curso"}</h2>
             <form>
               <label>
                 Nombre del curso:
@@ -193,6 +231,7 @@ const ComAgregarCursos = () => {
                 Categoría del curso:
                 <select
                   id="inputSelect"
+                  value={categoriaSeleccionada}
                   onChange={(e) => setCategoriaSeleccionada(e.target.value)}
                 >
                   <option value="">Seleccione la categoría</option>
@@ -207,9 +246,9 @@ const ComAgregarCursos = () => {
               <button
                 type="button"
                 className="btnGuardar"
-                onClick={cargarCurso}
+                onClick={cursoActual ? editarCursoHandler : cargarCurso}
               >
-                Guardar
+                {cursoActual ? "Actualizar" : "Guardar"}
               </button>
               <button type="button" className="btnCerrar" onClick={cerrarModal}>
                 Cerrar

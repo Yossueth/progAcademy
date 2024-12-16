@@ -45,22 +45,3 @@
   background-color: #164540;
 }
 
-/* Ocultar por defecto */
-.accordion-content.hidden {
-  display: none;
-}
-
-/* Mostrar cuando está visible */
-.accordion-content.visible {
-  display: block;
-}
-
-/* Transición suave para un efecto más atractivo */
-.accordion-content {
-  transition: max-height 0.3s ease-in-out;
-}
-
-.accordion-header {
-  cursor: pointer;
-  font-weight: bold;
-}

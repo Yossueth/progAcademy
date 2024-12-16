@@ -36,7 +36,7 @@ const Navbar = ({ userRole }) => {
           </a>
           <ul className="dropdown-menu">
             <li>
-              <a href="/" target="_blank" rel="noopener noreferrer">
+              <a href="/perfil" target="_blank" rel="noopener noreferrer">
                 Perfil
               </a>
             </li>
