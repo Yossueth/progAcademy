@@ -1,10 +1,13 @@
 import Routing from "./routes/Routing";
 import './App.css'
+import AcademyProvider from "./components/Context/AcademyProvider";
 
 function App() {
   return (
     <div>
-      <Routing />
+      <AcademyProvider>
+        <Routing />
+      </AcademyProvider>
     </div>
   );
 }

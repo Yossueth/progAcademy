@@ -1,40 +1,42 @@
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { postUsersLogin } from "../services/LoginServices";
 import "../css/login.css";
 import { jwtDecode } from "jwt-js-decode";
+import AcademyContext from "./Context/AcademyContext";
 
 const FormLogin = () => {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const { login } = useContext(AcademyContext)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const encrypted_token_JSON = await postUsersLogin(correo, password); // Obtengo el token encriptado del servidor
-      const encrypted_token = encrypted_token_JSON.token;
-      const token = jwtDecode(encrypted_token);
-
-      sessionStorage.setItem("token", encrypted_token); // Guardo el token encriptado
-
+      const encrypted_token_JSON = await postUsersLogin(correo, password);
+      console.log("Respuesta del servidor:", encrypted_token_JSON);
+      sessionStorage.setItem("token", encrypted_token_JSON.token);
+      
       Swal.fire({
         icon: "success",
         title: "Login exitoso",
         text: `Bienvenido`,
       });
+      const tokenEnciptado = sessionStorage.getItem("token");
+      const token = jwtDecode(tokenEnciptado);
+      
       if (token.payload.rol === 1) {
+        login(token.payload.rol)
         navigate("/home");
       }
       if (token.payload.rol === 2) {
+        login(token.payload.rol)
         navigate("/agregarCursos");
       }
-      if (token.payload.rol === 3) {
-        navigate("/administracion");
-      }
-      if (token.payload.rol === 4) {
+      if (token.payload.rol === 3 || token.payload.rol === 4) {
+        login(token.payload.rol)
         navigate("/administracion");
       }
     } catch {

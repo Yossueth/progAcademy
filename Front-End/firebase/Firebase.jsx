@@ -5,17 +5,15 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDnKv4vv6rk7oHg8jdJ7xX5VfiPooaZC40",
-  authDomain: "progracademy-95044.firebaseapp.com",
-  projectId: "progracademy-95044",
-  storageBucket: "progracademy-95044.firebasestorage.app",
-  messagingSenderId: "797366203018",
-  appId: "1:797366203018:web:4961f0c61cbadad8e43373",
-  measurementId: "G-X58JDKRDE1"
+  apiKey: "AIzaSyBCLqv7hRZcyn5TJm8OnRgm1e2dNNIb9N0",
+  authDomain: "prograacademystore.firebaseapp.com",
+  projectId: "prograacademystore",
+  storageBucket: "prograacademystore.firebasestorage.app",
+  messagingSenderId: "996322586768",
+  appId: "1:996322586768:web:980791eefd3c3541526815"
 };
 
 // Initialize Firebase

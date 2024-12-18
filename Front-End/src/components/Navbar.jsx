@@ -2,12 +2,18 @@ import "../css/Navbar.css";
 import React, { useContext } from "react";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import AcademyContext from "./Context/AcademyContext";
-import logo from "../img/logo.png"; 
+import logo from "../img/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ userRole }) => {
   const allowedRoles = [2];
+  const { logout } = useContext(AcademyContext);
+  const navigate = useNavigate();
 
-  // const { first, token } = useContext(AcademyContext);
+  const cerrarSesion = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <div className="navbar">
@@ -36,7 +42,7 @@ const Navbar = ({ userRole }) => {
           </a>
           <ul className="dropdown-menu">
             <li>
-              <a href="/perfil" target="_blank" rel="noopener noreferrer">
+              <a href="/perfil"rel="noopener noreferrer">
                 Perfil
               </a>
             </li>
@@ -52,7 +58,7 @@ const Navbar = ({ userRole }) => {
               )}
             </li>
             <li role="separator" className="divider"></li>
-            <li className="cerrarSesion">
+            <li className="cerrarSesion" onClick={cerrarSesion}>
               <p>Cerrar sesión</p>
             </li>
           </ul>

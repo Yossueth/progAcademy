@@ -4,7 +4,7 @@ const permisosToken = "Bearer " + token;
 // GET
 export async function getUsers() {
   try {
-    const response = await fetch("http://localhost:3000/usuarios/");
+    const response = await fetch("http://localhost:3000/perfiles");
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -18,7 +18,7 @@ export async function getUsers() {
 //get por id
 export async function getUserById(id) {
   try {
-    const response = await fetch(`http://localhost:3000/usuarios/${id}`);
+    const response = await fetch(`http://localhost:3000/perfiles/${id}`);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -33,7 +33,7 @@ export async function getUserById(id) {
 // POST
 export async function postUsersRegister(data) {
   try {
-    const response = await fetch("http://localhost:3000/usuarios/registro", {
+    const response = await fetch("http://localhost:3000/perfiles/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export async function postUsersRegister(data) {
 export async function putUsers(id) {
   try {
     const response = await fetch(
-      `http://localhost:3000/usuarios/registro/${id}`,
+      `http://localhost:3000/perfiles/${id}`,
       {
         method: "PUT",
         headers: {
@@ -82,7 +82,7 @@ export async function putUsers(id) {
 
 export async function patchUsers(newRolId, id) {
   try {
-    const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const response = await fetch(`http://localhost:3000/perfiles/${id}`, {
       method: "PATCH", // Método PATCH
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export async function patchUsers(newRolId, id) {
 // DELETE
 export async function deleteUsers(id) {
   try {
-    const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const response = await fetch(`http://localhost:3000/perfiles/${id}`, {
       method: "DELETE",
     });
     if (response.ok) {

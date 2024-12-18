@@ -112,7 +112,6 @@
 }
 
 /* Modal */
-/* Fondo desenfocado del modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -136,13 +135,16 @@
   width: 400px;
 }
 
+.formModal{
+  margin-right: 15px;
+}
+
 .modal h2 {
   margin-bottom: 20px;
 }
 
-.modal label {
-  display: block;
-  margin-bottom: 10px;
+.botonesModal {
+  margin-top: 10px;
 }
 
 .modal input,

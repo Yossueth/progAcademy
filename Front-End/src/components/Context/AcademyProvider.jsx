@@ -3,12 +3,20 @@ import AcademyContext from "./AcademyContext";
 import { jwtDecode } from "jwt-js-decode";
 
 const AcademyProvider = ({ children }) => {
-  const tokenEnciptado = sessionStorage.getItem("token");
+  const [user, setUser] = useState(null);
 
-  const token = jwtDecode(tokenEnciptado);
+  const login = (rol) => {
+    setUser(rol);
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
+  const isAuthenticated = !!user;
 
   return (
-    <AcademyContext.Provider value={{ token }}>
+    <AcademyContext.Provider value={{ login, logout, isAuthenticated }}>
       {children}
     </AcademyContext.Provider>
   );

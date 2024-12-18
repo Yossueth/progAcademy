@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from "react";
 import "../css/cursos.css";
+import Swal from "sweetalert2";
+import { jwtDecode } from "jwt-js-decode";
+import React, { useState, useEffect } from "react";
 import cargarArchivos from "../../firebase/Firebase";
+import { getCategorias } from "../services/categoriasServices";
 import {
   postCursos,
   getCursos,
   deleteCursos,
   putCursos,
 } from "../services/cursos";
-import { getCategorias } from "../services/categoriasServices";
-import Swal from "sweetalert2";
-import { jwtDecode } from "jwt-js-decode";
+
+// import AcademyContext from "./Context/AcademyContext";
 
 const ComAgregarCursos = () => {
-  const [nombre, setNombre] = useState("");
-  const [categoria, setCategoria] = useState([]);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [cursos, setCursos] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [precio, setPrecio] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [cursos, setCursos] = useState([]);
+  const [categoria, setCategoria] = useState([]);
+  const [miniatura, setMiniatura] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
   const [cursoActual, setCursoActual] = useState(null);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
 
+  //token
   const tokenEnciptado = sessionStorage.getItem("token");
   const token = jwtDecode(tokenEnciptado);
-
+  //abrir modal
   const abrirModal = (curso = null) => {
     setCursoActual(curso);
     setNombre(curso?.nombre_curso || "");
@@ -34,19 +38,20 @@ const ComAgregarCursos = () => {
     setFile(null);
     setModalOpen(true);
   };
-
+  //cerrar modal
   const cerrarModal = () => {
     setModalOpen(false);
     setCursoActual(null);
   };
-
+  //trae los archivos del firebese
   const cargarArchivosFirebase = async (data) => {
-    if (data) {
-      const urlArchivo = await cargarArchivos(data);
+    const obtenerArchivo = data;
+    if (obtenerArchivo) {
+      const urlArchivo = await cargarArchivos(obtenerArchivo);
       return urlArchivo;
     }
   };
-
+  //get de usuarios
   const fetchCursos = async () => {
     try {
       const data = await getCursos();
@@ -55,7 +60,7 @@ const ComAgregarCursos = () => {
       console.error("Error al cargar los cursos:", error);
     }
   };
-
+  //get categorias
   const fetchCate = async () => {
     try {
       const data = await getCategorias();
@@ -69,7 +74,7 @@ const ComAgregarCursos = () => {
     fetchCursos();
     fetchCate();
   }, []);
-
+  //funcion para eliminaar cursos
   const eliminarCursos = async (id) => {
     const result = await Swal.fire({
       title: "¿Estás seguro que quieres eliminar este curso?",
@@ -89,7 +94,7 @@ const ComAgregarCursos = () => {
           text: "Tu archivo ha sido eliminado.",
           icon: "success",
         });
-        fetchCursos();
+        fetchCursos(); //para recargar la lista
       } catch (error) {
         console.error("Error al eliminar el producto:", error);
         Swal.fire({
@@ -100,44 +105,48 @@ const ComAgregarCursos = () => {
       }
     }
   };
-
+  //funcion para  agregar los cursos
   const cargarCurso = async (e) => {
     e.preventDefault();
     try {
-      const imgFile = await cargarArchivosFirebase(file);
-      if (imgFile) {
+      const urlMiniatura = await cargarArchivosFirebase(miniatura);
+      const urlArchivo = await cargarArchivosFirebase(file);
+      if (urlMiniatura && urlArchivo) {
         const newCurso = {
-          archivo: imgFile,
+          archivo: urlArchivo,
           nombre_curso: nombre,
+          miniatura: urlMiniatura,
           descripcion,
           precio,
           categoria_id: categoriaSeleccionada,
           usuario_id: token.payload.id,
         };
         await postCursos(newCurso);
-        cerrarModal();
-        fetchCursos();
+        cerrarModal(); // para cerrar modal
+        fetchCursos(); //para recargar la lista
       }
     } catch (error) {
       console.error("Error al guardar el curso:", error);
     }
   };
-
+  //funcion para editar cursos
   const editarCursoHandler = async () => {
     try {
-      const imgFile = file
-        ? await cargarArchivosFirebase(file)
-        : cursoActual.archivo;
-      const updatedCurso = {
-        archivo: imgFile,
-        nombre_curso: nombre,
-        descripcion,
-        precio,
-        categoria_id: categoriaSeleccionada,
-      };
-      await putCursos(updatedCurso, cursoActual.id); 
-      cerrarModal();
-      fetchCursos();
+      const urlMiniatura = await cargarArchivosFirebase(miniatura);
+      const imgFile = await cargarArchivosFirebase(file);
+      if (urlMiniatura && imgFile) {
+        const updatedCurso = {
+          archivo: imgFile,
+          nombre_curso: nombre,
+          miniatura: urlMiniatura,
+          descripcion,
+          precio,
+          categoria_id: categoriaSeleccionada,
+        };
+        await putCursos(updatedCurso, cursoActual.id);
+        cerrarModal();
+        fetchCursos();
+      }
     } catch (error) {
       console.error("Error al editar el curso:", error);
     }
@@ -154,9 +163,13 @@ const ComAgregarCursos = () => {
       <div className="containerCard">
         {cursos.map((curso) => (
           <div className="card" key={curso.id}>
+            {/* <video controls width="100%">
+                <source src={curso.archivo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video> */}
             <img
               className="imagenPrueba"
-              src={curso.archivo}
+              src={curso.miniatura}
               alt={curso.nombre}
             />
             <div className="textoCarta">
@@ -182,12 +195,12 @@ const ComAgregarCursos = () => {
           </div>
         ))}
       </div>
-
+      {/* modal */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>{cursoActual ? "Editar Curso" : "Agregar Curso"}</h2>
-            <form>
+            <form className="formModal">
               <label>
                 Nombre del curso:
                 <input
@@ -198,6 +211,15 @@ const ComAgregarCursos = () => {
                 />
               </label>
               <br />
+              <label>
+                miniatura del curso:
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    setMiniatura(e.target.files[0]);
+                  }}
+                />
+              </label>
               <label>
                 Archivo del curso:
                 <input
@@ -243,16 +265,22 @@ const ComAgregarCursos = () => {
                 </select>
               </label>
               <br />
-              <button
-                type="button"
-                className="btnGuardar"
-                onClick={cursoActual ? editarCursoHandler : cargarCurso}
-              >
-                {cursoActual ? "Actualizar" : "Guardar"}
-              </button>
-              <button type="button" className="btnCerrar" onClick={cerrarModal}>
-                Cerrar
-              </button>
+              <div className="botonesModal">
+                <button
+                  type="button"
+                  className="btnGuardar"
+                  onClick={cursoActual ? editarCursoHandler : cargarCurso}
+                >
+                  {cursoActual ? "Actualizar" : "Guardar"}
+                </button>
+                <button
+                  type="button"
+                  className="btnCerrar"
+                  onClick={cerrarModal}
+                >
+                  Cerrar
+                </button>
+              </div>
             </form>
           </div>
         </div>

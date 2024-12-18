@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import AgregarCursos from "../pages/AgregarCursos";
 import Administracion from "../pages/administracion";
 import Perfil from "../pages/perfil";
+import RutaPrivada from "./RutaPrivada";
 
 const Routing = () => {
   return (
@@ -14,8 +15,8 @@ const Routing = () => {
           <Route path="/" element={<Registro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/agregarCursos" element={<AgregarCursos />} />
-          <Route path="/administracion" element={<Administracion />} />
+          <Route path="/agregarCursos" element={<RutaPrivada><AgregarCursos /></RutaPrivada>} />
+          <Route path="/administracion" element={<RutaPrivada> <Administracion /></RutaPrivada>} />
           <Route path="/perfil" element={<Perfil />} />
         </Routes>
       </Router>
